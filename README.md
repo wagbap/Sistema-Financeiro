@@ -36,19 +36,19 @@
 
 ## Backend (ASP.NET Core WebAPI)
 
-cd path/to/api-directory
-dotnet restore
+cd path/to/api-directory<br>
+dotnet restore<br>
 dotnet run
 
 ## Frontend (React) 
 
 
-cd path/to/react-app-directory
-npm install
+cd path/to/react-app-directory<br>
+npm install<br>
 npm start
 
 
-📝 Licença
+## 📝 Licença
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
 <div align="center">

@@ -10,9 +10,12 @@ export const filterListByMonth = (list: Item[], date: string): Item[] => {
     let [year, month] = date.split('-');
 
     for(let i in list) {
+        // Convertendo a string para objeto Date
+        const itemDate = new Date(list[i].date);
+
         if(
-            list[i].date.getFullYear() === parseInt(year) &&
-            (list[i].date.getMonth() + 1) === parseInt(month)
+            itemDate.getFullYear() === parseInt(year) &&
+            (itemDate.getMonth() + 1) === parseInt(month)
         ) {
             newList.push(list[i]);
         }
@@ -20,6 +23,7 @@ export const filterListByMonth = (list: Item[], date: string): Item[] => {
 
     return newList;
 }
+
 
 export const formatDate = (date: Date): string => {
     let year = date.getFullYear();

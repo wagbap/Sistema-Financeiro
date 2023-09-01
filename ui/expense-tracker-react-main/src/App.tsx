@@ -2,29 +2,46 @@ import { useState, useEffect } from 'react';
 import * as C from './App.styles';
 import { Item } from './types/Item';
 import { categories } from './data/categories';
-import { items } from './data/items';
 import { getCurrentMonth, filterListByMonth } from './helpers/dateFilter';
 import { TableArea } from './components/TableArea';
 import { InfoArea } from './components/InfoArea';
 import { InputArea } from './components/InputArea';
+import axios from 'axios';
 
 const App = () => {
-  const [list, setList] = useState(items);
+  const [list, setList] = useState<Item[]>([]);
   const [filteredList, setFilteredList] = useState<Item[]>([]);
   const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
 
-  useEffect(()=>{
-    setFilteredList( filterListByMonth(list, currentMonth) );
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await axios.get('https://localhost:7189/api/v1/items');
+        if (response.status === 200) {
+          setList(response.data);
+        } else {
+          console.error("Erro ao buscar itens: ", response.statusText);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar itens: ", error);
+      }
+    }
+
+    fetchItems();
+  }, []);
+
+  useEffect(() => {
+    setFilteredList(filterListByMonth(list, currentMonth));
   }, [list, currentMonth]);
 
-  useEffect(()=>{
+  useEffect(() => {
     let incomeCount = 0;
     let expenseCount = 0;
 
-    for(let i in filteredList) {
-      if(categories[filteredList[i].category].expense) {
+    for (let i in filteredList) {
+      if (categories[filteredList[i].category].expense) {
         expenseCount += filteredList[i].value;
       } else {
         incomeCount += filteredList[i].value;
@@ -39,10 +56,14 @@ const App = () => {
     setCurrentMonth(newMonth);
   }
 
-  const handleAddItem = (item: Item) => {
-    let newList = [...list];
-    newList.push(item);
-    setList(newList);
+  const handleAddItem = async (item: Item) => {
+    try {
+      const response = await axios.post('https://localhost:7189/api/v1/items', item);
+      const returnedItem = response.data;
+      setList(prevList => [...prevList, returnedItem]);
+    } catch (error) {
+      console.error("Erro ao adicionar item:", error);
+    }
   }
 
   return (
@@ -51,18 +72,14 @@ const App = () => {
         <C.HeaderText>Sistema Financeiro</C.HeaderText>
       </C.Header>
       <C.Body>
-        
         <InfoArea
           currentMonth={currentMonth}
           onMonthChange={handleMonthChange}
           income={income}
           expense={expense}
         />
-
         <InputArea onAdd={handleAddItem} />
-
         <TableArea list={filteredList} />
-
       </C.Body>
     </C.Container>
   );

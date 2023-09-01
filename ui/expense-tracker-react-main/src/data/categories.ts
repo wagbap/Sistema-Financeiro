@@ -8,5 +8,6 @@ export const categories: Category = {
     cabelo: { title: 'Cabelo', color: 'black', expense: true },
     fastfood: { title: 'FastFood', color: 'orange', expense: true },
     meo: { title: 'Tarifário MEO', color: '#008080', expense: true },
-    divida: { title: 'Dividas', color: 'red', expense: true }
+    divida: { title: 'Dividas', color: 'red', expense: true },
+    utensilhos: { title: 'Utensílios', color: '#000080', expense: true }
 }

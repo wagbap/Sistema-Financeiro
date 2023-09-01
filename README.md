@@ -40,3 +40,20 @@
 cd path/to/api-directory
 dotnet restore
 dotnet run
+
+### Frontend (React) 
+
+```bash
+cd path/to/react-app-directory
+npm install
+npm start
+
+
+📝 Licença
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+<div align="center">
+Feito com ❤️ por Wagner Baptista!
+
+</div>
+

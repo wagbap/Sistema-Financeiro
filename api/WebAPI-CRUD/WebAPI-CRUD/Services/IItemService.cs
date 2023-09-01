@@ -1,5 +1,5 @@
 ﻿using WebAPI_CRUD.Entities;
-using WebAPI_CRUD.Models;
+using WebAPI_CRUD.Models.Items;
 
 namespace WebAPI_CRUD.Services
 {
@@ -9,7 +9,10 @@ namespace WebAPI_CRUD.Services
     {
         IEnumerable<Items> GetAll();
         void Create(ItemRequest model);
-        // outros métodos que você desejar...
+
+        Items GetById(int id);
+
+        void Update(int id, UpdateRequest model);
     }
 
 }

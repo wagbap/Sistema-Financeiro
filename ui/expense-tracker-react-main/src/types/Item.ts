@@ -1,6 +1,8 @@
 export type Item = {
-    date: Date;
+    id?: number;
+    date: string | Date;
     category: string;
     title: string;
     value: number;
-}
+    
+};

@@ -1,4 +1,4 @@
-﻿namespace WebAPI_CRUD.Models
+﻿namespace WebAPI_CRUD.Models.Items
 {
     public class ItemRequest
     {

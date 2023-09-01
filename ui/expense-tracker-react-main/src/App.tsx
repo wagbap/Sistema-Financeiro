@@ -30,10 +30,7 @@ const App = () => {
     }
 
     fetchItems();
-    // Configurando o polling a cada 10 segundos
-    const interval = setInterval(fetchItems, 10000);
-
-    // Limpando o intervalo quando o componente for desmontado
+    const interval = setInterval(fetchItems, 1000);
     return () => clearInterval(interval);
   }, []);
 

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI_CRUD.Models;
+using WebAPI_CRUD.Models.Items;
 using WebAPI_CRUD.Services;
 
 namespace WebAPI_CRUD.Controllers
@@ -26,8 +26,15 @@ namespace WebAPI_CRUD.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var items = _itemService.GetAll();
-            return Ok(items);
+            var item = _itemService.GetAll();
+            return Ok(item);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var item = _itemService.GetById(id);
+            return Ok(item);
         }
 
         [HttpPost]
@@ -35,6 +42,13 @@ namespace WebAPI_CRUD.Controllers
         {
             _itemService.Create(model);
             return Ok(new { message = "Item created" });
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, UpdateRequest model)
+        {
+            _itemService.Update(id, model);
+            return Ok(new { message = "User updated" });
         }
     }
 

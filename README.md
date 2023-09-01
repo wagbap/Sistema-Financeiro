@@ -34,16 +34,15 @@
 
 ## 🚀 Instalação
 
-### Backend (ASP.NET Core WebAPI)
+## Backend (ASP.NET Core WebAPI)
 
-```bash
 cd path/to/api-directory
 dotnet restore
 dotnet run
 
-### Frontend (React) 
+## Frontend (React) 
 
-```bash
+
 cd path/to/react-app-directory
 npm install
 npm start

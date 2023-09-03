@@ -65,10 +65,6 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
     }
   }
 
-  
-
-
-
   const clearFields = () => {
     setDateField('');
     setCategoryField('');
@@ -80,7 +76,7 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
 
 useEffect(() => {
   if (itemToEdit) {
- 
+    //setDateField(itemToEdit.date);
     setCategoryField(itemToEdit.category);
     setTitleField(itemToEdit.title);
     setValueField(itemToEdit.value);
@@ -88,6 +84,7 @@ useEffect(() => {
     clearFields();
   }
 }, [itemToEdit, clearFields]);
+
 
 
 

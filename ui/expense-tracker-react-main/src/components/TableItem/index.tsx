@@ -9,7 +9,7 @@ type Props = {
 
 export const TableItem = ({ item }: Props) => {
     return (
-        <C.TableLine>
+        <>
             <C.TableColumn>{formatDate(new Date(item.date))}</C.TableColumn>
             <C.TableColumn>
                 <C.Category color={categories[item.category].color}>
@@ -22,6 +22,6 @@ export const TableItem = ({ item }: Props) => {
                     {item.value} €
                 </C.Value>
             </C.TableColumn>
-        </C.TableLine>
+        </>
     );
 }

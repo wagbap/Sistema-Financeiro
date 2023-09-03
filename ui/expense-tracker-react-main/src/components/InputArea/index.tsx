@@ -91,7 +91,9 @@ useEffect(() => {
     setCategoryField(itemToEdit.category);
     setTitleField(itemToEdit.title);
     setValueField(itemToEdit.value);
-  } 
+  }  else {
+    clearFields();
+  }
 }, [itemToEdit]);
 
 

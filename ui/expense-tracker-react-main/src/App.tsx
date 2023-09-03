@@ -138,6 +138,7 @@ const App = () => {
           income={income}
           expense={expense}
         />
+
         <InputArea
           onAdd={handleAddItem} // Correção aqui para adicionar itens
           itemToEdit={editingItem}
@@ -145,8 +146,8 @@ const App = () => {
           onEditComplete={handleModalClose}
         />
 
-        {message && <div>{message}</div>}
         <TableArea list={filteredList} onEdit={handleEditClick} />
+    
         
   
         {/*

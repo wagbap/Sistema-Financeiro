@@ -8,7 +8,6 @@ type Props = {
 };
 
 
-
 export const TableArea = ({ list, onEdit }: Props) => {
     return (
         <C.Table>
@@ -24,8 +23,8 @@ export const TableArea = ({ list, onEdit }: Props) => {
             <tbody>
                 {list.map((item, index) => (
                     <tr key={item.id}>  {/* Use o ID do item como chave */}
-                        <TableItem item={item} />
-                        <td>
+                      <TableItem key={index} item={item} />
+                         <td>
                             <button onClick={() => onEdit(item)}>Editar</button>
                         </td>
                     </tr>

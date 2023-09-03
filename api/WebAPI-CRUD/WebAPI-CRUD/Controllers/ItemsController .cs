@@ -49,7 +49,7 @@ namespace WebAPI_CRUD.Controllers
             return Ok(new { message = "User updated" });
         }
 
-
+        //Delete page
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

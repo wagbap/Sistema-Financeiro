@@ -1,7 +1,7 @@
 import { useState, useEffect} from 'react';
 import * as C from './styles';
 import { Item } from '../../types/Item';
-
+import moment from 'moment';
 import { categories } from '../../data/categories';
 import { newDateAdjusted } from '../../helpers/dateFilter';
 
@@ -13,6 +13,9 @@ type Props = {
   onEdit: (item: Item) => void;
   onEditComplete: () => void;
 };
+
+
+
 export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) => {
 
   const [dateField, setDateField] = useState('');
@@ -74,16 +77,24 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
     setValueField(0);
 }
 
-  useEffect(() => {
-    if (itemToEdit) {
- 
-      setCategoryField(itemToEdit.category);
-      setTitleField(itemToEdit.title);
-      setValueField(itemToEdit.value);
+useEffect(() => {
+  if (itemToEdit) {
+    if (itemToEdit.date instanceof Date) {
+      const formattedDate = `${itemToEdit.date.getFullYear()}-${(itemToEdit.date.getMonth() + 1).toString().padStart(2, '0')}-${itemToEdit.date.getDate().toString().padStart(2, '0')}`;
+      setDateField(formattedDate);
     } else {
-      clearFields();
+      // Use a linha aqui dentro do useEffect
+      const formattedDate = moment(itemToEdit.date).format('YYYY-MM-DD');
+      setDateField(formattedDate);
     }
-  }, [itemToEdit]);
+    
+    setCategoryField(itemToEdit.category);
+    setTitleField(itemToEdit.title);
+    setValueField(itemToEdit.value);
+  } 
+}, [itemToEdit]);
+
+
 
 
 

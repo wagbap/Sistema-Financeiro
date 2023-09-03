@@ -7,8 +7,6 @@ import { TableArea } from './components/TableArea';
 import { InfoArea } from './components/InfoArea';
 import { InputArea } from './components/InputArea';
 import axios from 'axios';
-import { newDateAdjusted } from './helpers/dateFilter';
-import Modal from './components/InputArea/Modal';
 
 
 
@@ -21,13 +19,6 @@ const App = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const [dateField, setDateField] = useState('');
-  const [categoryField, setCategoryField] = useState('');
-  const [titleField, setTitleField] = useState('');
-  const [valueField, setValueField] = useState(0);
-
-
-
 
 
   useEffect(() => {

@@ -11,7 +11,6 @@ import { newDateAdjusted } from './helpers/dateFilter';
 import Modal from './components/InputArea/Modal';
 
 
-
 const App = () => {
   const [list, setList] = useState<Item[]>([]);
   const [filteredList, setFilteredList] = useState<Item[]>([]);

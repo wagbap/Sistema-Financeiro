@@ -156,7 +156,10 @@ const App = () => {
 
         {message && <div>{message}</div>}
         <TableArea list={filteredList} onEdit={handleEditClick} />
-        {showEditModal && (
+        
+  
+        {/*
+        showEditModal && (
           <Modal onClose={handleModalClose}>
             <InputArea
               onAdd={handleAddItem}  // Correção aqui para adicionar itens
@@ -164,10 +167,11 @@ const App = () => {
               onEdit={handleItemUpdate}
               onEditComplete={handleModalClose}
             />
-          </Modal>
+          </Modal>)
+       */
+       }
 
 
-        )}
 
       </C.Body>
     </C.Container>

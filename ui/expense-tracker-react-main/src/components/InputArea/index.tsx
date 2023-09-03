@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import * as C from './styles';
 import { Item } from '../../types/Item';
 
@@ -20,6 +20,8 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
   const [titleField, setTitleField] = useState('');
   const [valueField, setValueField] = useState(0);
 
+
+  
 
   let categoryKeys: string[] = Object.keys(categories);
 
@@ -72,19 +74,16 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
     setValueField(0);
 }
 
-
-
-useEffect(() => {
-  if (itemToEdit) {
-    //setDateField(itemToEdit.date);
-    setCategoryField(itemToEdit.category);
-    setTitleField(itemToEdit.title);
-    setValueField(itemToEdit.value);
-  } else {
-    clearFields();
-  }
-}, [itemToEdit, clearFields]);
-
+  useEffect(() => {
+    if (itemToEdit) {
+ 
+      setCategoryField(itemToEdit.category);
+      setTitleField(itemToEdit.title);
+      setValueField(itemToEdit.value);
+    } else {
+      clearFields();
+    }
+  }, [itemToEdit]);
 
 
 

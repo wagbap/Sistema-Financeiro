@@ -5,11 +5,16 @@ import { Item } from '../../types/Item';
 import { categories } from '../../data/categories';
 import { newDateAdjusted } from '../../helpers/dateFilter';
 
+// ... (importações mantidas)
+
 type Props = {
   onAdd: (item: Item) => void;
+  itemToEdit: Item | null;
+  onEdit: (item: Item) => void;
+  onEditComplete: () => void;
 };
+export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) => {
 
-export const InputArea = ({ onAdd }: Props) => {
   const [dateField, setDateField] = useState('');
   const [categoryField, setCategoryField] = useState('');
   const [titleField, setTitleField] = useState('');
@@ -36,15 +41,30 @@ export const InputArea = ({ onAdd }: Props) => {
     if(errors.length > 0) {
       alert(errors.join("\n"));
     } else {
-      onAdd({
-        date: newDateAdjusted(dateField),
-        category: categoryField,
-        title: titleField,
-        value: valueField
-      });
-      clearFields();
+      // Se temos um itemToEdit, então estamos no modo de edição
+      if (itemToEdit) {
+        onEdit({
+          ...itemToEdit,
+          date: newDateAdjusted(dateField),
+          category: categoryField,
+          title: titleField,
+          value: valueField
+        });
+        onEditComplete(); // Feche o modal após editar
+      } else {
+        // Modo de adição
+        onAdd({
+          date: newDateAdjusted(dateField),
+          category: categoryField,
+          title: titleField,
+          value: valueField
+        });
+        clearFields();
     }
   }
+}
+
+
 
   const clearFields = () => {
     setDateField('');

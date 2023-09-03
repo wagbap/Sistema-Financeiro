@@ -7,6 +7,10 @@ import { TableArea } from './components/TableArea';
 import { InfoArea } from './components/InfoArea';
 import { InputArea } from './components/InputArea';
 import axios from 'axios';
+import { newDateAdjusted } from './helpers/dateFilter';
+import Modal from './components/InputArea/Modal';
+
+
 
 const App = () => {
   const [list, setList] = useState<Item[]>([]);
@@ -14,6 +18,12 @@ const App = () => {
   const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingItem, setEditingItem] = useState<Item | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
+
+
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -39,6 +49,17 @@ const App = () => {
   }, [list, currentMonth]);
 
   useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 3000);  // a mensagem desaparecerá após 3 segundos
+
+      return () => clearTimeout(timer);  // Limpa o timer se o componente for desmontado
+    }
+  }, [message]);
+
+
+  useEffect(() => {
     let incomeCount = 0;
     let expenseCount = 0;
 
@@ -54,8 +75,25 @@ const App = () => {
     setExpense(expenseCount);
   }, [filteredList]);
 
+
   const handleMonthChange = (newMonth: string) => {
     setCurrentMonth(newMonth);
+  }
+const handleEditClick = (item: Item) => {
+  // Set the editing item state
+  setEditingItem(item);
+  // Set the show edit modal state
+  setShowEditModal(true);
+};
+
+  const handleModalClose = () => {
+    setEditingItem(null);
+    setShowEditModal(false);
+  }
+
+  const handleItemUpdate = (updatedItem: Item) => {
+    handleUpdateItem(updatedItem); // sua função que chama a API para atualizar
+    handleModalClose();
   }
 
   const handleAddItem = async (item: Item) => {
@@ -68,20 +106,69 @@ const App = () => {
     }
   }
 
+
+  const handleUpdateItem = async (item: Item) => {
+    
+    if (!item.id) {
+      setMessage("Erro ao atualizar: ID do item não fornecido");
+      return;
+    }
+
+    try {
+      const response = await axios.put(`https://localhost:7189/api/v1/items/${item.id}`, item);
+      const updatedItem = response.data;
+
+      // Atualizar o item na lista local
+      setList(prevList => prevList.map(i => i.id === updatedItem.id ? updatedItem : i));
+
+      // Defina sua mensagem de sucesso aqui
+      setMessage("Item atualizado com sucesso!");
+    } catch (error) {
+      setMessage("Erro ao atualizar item: " + error);
+      console.error("Erro ao atualizar item:", error);
+    }
+  }
+
+
+
+
+
+
   return (
     <C.Container>
       <C.Header>
         <C.HeaderText>Sistema Financeiro</C.HeaderText>
       </C.Header>
       <C.Body>
+
         <InfoArea
           currentMonth={currentMonth}
           onMonthChange={handleMonthChange}
           income={income}
           expense={expense}
         />
-        <InputArea onAdd={handleAddItem} />
-        <TableArea list={filteredList} />
+         <InputArea
+          onAdd={handleAddItem} // Correção aqui para adicionar itens
+          itemToEdit={editingItem}
+          onEdit={handleItemUpdate}
+          onEditComplete={handleModalClose}
+        />
+
+        {message && <div>{message}</div>}
+        <TableArea list={filteredList} onEdit={handleEditClick} />
+        {showEditModal && (
+          <Modal onClose={handleModalClose}>
+            <InputArea
+              onAdd={handleAddItem}  // Correção aqui para adicionar itens
+              itemToEdit={editingItem}
+              onEdit={handleItemUpdate}
+              onEditComplete={handleModalClose}
+            />
+          </Modal>
+
+
+        )}
+
       </C.Body>
     </C.Container>
   );

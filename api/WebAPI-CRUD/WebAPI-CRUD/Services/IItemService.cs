@@ -13,6 +13,8 @@ namespace WebAPI_CRUD.Services
         Items GetById(int id);
 
         void Update(int id, UpdateRequest model);
+
+        void Delete(int id);
     }
 
 }

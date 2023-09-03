@@ -27,7 +27,6 @@ namespace WebAPI_CRUD.Services
             return _context.Items.Find(id);
         }
 
-
         public void Create(ItemRequest model)
         {
             var item = _mapper.Map<Items>(model);
@@ -35,17 +34,18 @@ namespace WebAPI_CRUD.Services
             _context.SaveChanges();
         }
 
-
         public void Update(int id, UpdateRequest model)
         {
             var item = GetItem(id);
-
-          
-          
-
             _mapper.Map(model, item);
-
             _context.Items.Update(item);
+            _context.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var item = GetItem(id);
+            _context.Items.Remove(item);
             _context.SaveChanges();
         }
 
@@ -55,6 +55,5 @@ namespace WebAPI_CRUD.Services
             if (user == null) throw new KeyNotFoundException("User not found");
             return user;
         }
-
     }
 }

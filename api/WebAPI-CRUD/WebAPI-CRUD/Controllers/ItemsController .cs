@@ -12,8 +12,6 @@ namespace WebAPI_CRUD.Controllers
         private readonly ItemService _itemService;
         private IMapper _mapper;
 
-
-
         public ItemsController(
              IItemService itemService,
              IMapper mapper)
@@ -49,6 +47,14 @@ namespace WebAPI_CRUD.Controllers
         {
             _itemService.Update(id, model);
             return Ok(new { message = "User updated" });
+        }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _itemService.Delete(id);
+            return Ok(new { message = "User deleted" });
         }
     }
 

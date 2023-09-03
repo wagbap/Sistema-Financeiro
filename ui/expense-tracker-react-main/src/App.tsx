@@ -8,7 +8,7 @@ import { InfoArea } from './components/InfoArea';
 import { InputArea } from './components/InputArea';
 import axios from 'axios';
 
-
+const API_BASE_URL = 'https://localhost:7189/api/v1/items';
 
 const App = () => {
   const [list, setList] = useState<Item[]>([]);
@@ -82,6 +82,15 @@ const App = () => {
     setShowEditModal(true);
   };
 
+  const handleDeleteClick = (item: Item) => {
+    const confirmed = window.confirm("Tem certeza de que deseja deletar este item?");
+    
+    if (confirmed) {
+      handleIDeletetem(item);
+    }
+  }
+  
+
   const handleModalClose = () => {
     setEditingItem(null);
     setShowEditModal(false);
@@ -125,6 +134,32 @@ const App = () => {
     }
   }
 
+
+  const handleIDeletetem = async (item: Item) => {
+    if (!item.id) {
+      setMessage("Erro ao deletar: ID do item não fornecido");
+      return;
+    }
+
+    try {
+      const response = await axios.delete(`https://localhost:7189/api/v1/items/${item.id}`);
+      
+      if (response.status === 200) {
+        // Remover o item da lista local
+        setList(prevList => prevList.filter(i => i.id !== item.id));
+
+        // Defina sua mensagem de sucesso aqui
+        setMessage("Item deletado com sucesso!");
+      } else {
+        setMessage("Erro ao deletar item.");
+      }
+    } catch (error) {
+      setMessage("Erro ao deletar item: " + error);
+      console.error("Erro ao deletar item:", error);
+    }
+}
+
+
   return (
     <C.Container>
       <C.Header>
@@ -143,12 +178,12 @@ const App = () => {
           onAdd={handleAddItem} // Correção aqui para adicionar itens
           itemToEdit={editingItem}
           onEdit={handleItemUpdate}
+          onDelete={handleIDeletetem}
           onEditComplete={handleModalClose}
         />
 
-        <TableArea list={filteredList} onEdit={handleEditClick} />
-    
-        
+        <TableArea list={filteredList} onEdit={handleEditClick}  onDelete={handleDeleteClick}/>
+           
   
         {/*
         showEditModal && (

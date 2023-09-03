@@ -5,10 +5,11 @@ import { TableItem } from '../TableItem';
 type Props = {
     list: Item[];
     onEdit: (item: Item) => void;
+    onDelete: (item: Item) => void;
 };
 
 
-export const TableArea = ({ list, onEdit }: Props) => {
+export const TableArea = ({ list, onEdit, onDelete }: Props) => {
     return (
         <C.Table>
             <thead>
@@ -26,6 +27,7 @@ export const TableArea = ({ list, onEdit }: Props) => {
                       <TableItem key={index} item={item} />
                          <td>
                             <button onClick={() => onEdit(item)}>Editar</button>
+                            <button onClick={() => onDelete(item)}>Excluir</button>                     
                         </td>
                     </tr>
                 ))}

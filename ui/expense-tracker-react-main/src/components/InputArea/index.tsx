@@ -11,6 +11,7 @@ type Props = {
   onAdd: (item: Item) => void;
   itemToEdit: Item | null;
   onEdit: (item: Item) => void;
+  onDelete: (item: Item) => void;
   onEditComplete: () => void;
 };
 

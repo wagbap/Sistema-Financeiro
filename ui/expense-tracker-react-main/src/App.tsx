@@ -84,12 +84,12 @@ const App = () => {
 
   const handleDeleteClick = (item: Item) => {
     const confirmed = window.confirm("Tem certeza de que deseja deletar este item?");
-    
+
     if (confirmed) {
       handleIDeletetem(item);
     }
   }
-  
+
 
   const handleModalClose = () => {
     setEditingItem(null);
@@ -143,7 +143,7 @@ const App = () => {
 
     try {
       const response = await axios.delete(`https://localhost:7189/api/v1/items/${item.id}`);
-      
+
       if (response.status === 200) {
         // Remover o item da lista local
         setList(prevList => prevList.filter(i => i.id !== item.id));
@@ -157,7 +157,7 @@ const App = () => {
       setMessage("Erro ao deletar item: " + error);
       console.error("Erro ao deletar item:", error);
     }
-}
+  }
 
 
   return (
@@ -174,6 +174,8 @@ const App = () => {
           expense={expense}
         />
 
+        {message && <div>{message}</div>}
+        
         <InputArea
           onAdd={handleAddItem} // Correção aqui para adicionar itens
           itemToEdit={editingItem}
@@ -182,9 +184,11 @@ const App = () => {
           onEditComplete={handleModalClose}
         />
 
-        <TableArea list={filteredList} onEdit={handleEditClick}  onDelete={handleDeleteClick}/>
-           
-  
+        <TableArea list={filteredList} onEdit={handleEditClick} onDelete={handleDeleteClick} />
+
+
+
+
         {/*
         showEditModal && (
           <Modal onClose={handleModalClose}>
@@ -196,7 +200,7 @@ const App = () => {
             />
           </Modal>)
        */
-       }
+        }
 
 
 

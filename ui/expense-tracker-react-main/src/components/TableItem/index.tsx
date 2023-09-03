@@ -7,6 +7,8 @@ type Props = {
     item: Item
 }
 
+
+
 export const TableItem = ({ item }: Props) => {
     return (
         <>

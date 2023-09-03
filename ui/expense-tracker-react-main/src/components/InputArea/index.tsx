@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as C from './styles';
 import { Item } from '../../types/Item';
 
@@ -20,25 +20,26 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
   const [titleField, setTitleField] = useState('');
   const [valueField, setValueField] = useState(0);
 
+
   let categoryKeys: string[] = Object.keys(categories);
 
   const handleAddEvent = () => {
     let errors: string[] = [];
 
-    if(isNaN(new Date(dateField).getTime())) {
+    if (isNaN(new Date(dateField).getTime())) {
       errors.push('Data inválida!');
     }
-    if(!categoryKeys.includes(categoryField)) {
+    if (!categoryKeys.includes(categoryField)) {
       errors.push('Categoria inválida!');
     }
-    if(titleField === '') {
+    if (titleField === '') {
       errors.push('Título vazio!');
     }
-    if(valueField <= 0) {
+    if (valueField <= 0) {
       errors.push('Valor inválido!');
     }
 
-    if(errors.length > 0) {
+    if (errors.length > 0) {
       alert(errors.join("\n"));
     } else {
       // Se temos um itemToEdit, então estamos no modo de edição
@@ -60,9 +61,11 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
           value: valueField
         });
         clearFields();
+      }
     }
   }
-}
+
+  
 
 
 
@@ -71,37 +74,55 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
     setCategoryField('');
     setTitleField('');
     setValueField(0);
+}
+
+
+
+useEffect(() => {
+  if (itemToEdit) {
+ 
+    setCategoryField(itemToEdit.category);
+    setTitleField(itemToEdit.title);
+    setValueField(itemToEdit.value);
+  } else {
+    clearFields();
   }
+}, [itemToEdit, clearFields]);
+
+
 
   return (
-      <C.Container>
-        <C.InputLabel>
-          <C.InputTitle>Data</C.InputTitle>
-          <C.Input type="date" value={dateField} onChange={e => setDateField(e.target.value)} />
-        </C.InputLabel>
-        <C.InputLabel>
-          <C.InputTitle>Categoria</C.InputTitle>
-          <C.Select value={categoryField} onChange={e => setCategoryField(e.target.value)}>
-            <>
-              <option></option>
-              {categoryKeys.map((key, index) => (
-                <option key={index} value={key}>{categories[key].title}</option>
-              ))}
-            </>
-          </C.Select>
-        </C.InputLabel>
-        <C.InputLabel>
-          <C.InputTitle>Título</C.InputTitle>
-          <C.Input type="text" value={titleField} onChange={e => setTitleField(e.target.value)} />
-        </C.InputLabel>
-        <C.InputLabel>
-          <C.InputTitle>Valor</C.InputTitle>
-          <C.Input type="number" value={valueField} onChange={e => setValueField(parseFloat(e.target.value))} />
-        </C.InputLabel>
-        <C.InputLabel>
-          <C.InputTitle>&nbsp;</C.InputTitle>
-          <C.Button onClick={handleAddEvent}>Adicionar</C.Button>
-        </C.InputLabel>
-      </C.Container>
+    <C.Container>
+      <C.InputLabel>
+        <C.InputTitle>Data</C.InputTitle>
+        <C.Input type="date" value={dateField} onChange={e => setDateField(e.target.value)} />
+      </C.InputLabel>
+      <C.InputLabel>
+        <C.InputTitle>Categoria</C.InputTitle>
+        <C.Select value={categoryField} onChange={e => setCategoryField(e.target.value)}>
+          <>
+            <option></option>
+            {categoryKeys.map((key, index) => (
+              <option key={index} value={key}>{categories[key].title}</option>
+            ))}
+          </>
+        </C.Select>
+      </C.InputLabel>
+      <C.InputLabel>
+        <C.InputTitle>Título</C.InputTitle>
+        <C.Input type="text" value={titleField} onChange={e => setTitleField(e.target.value)} />
+      </C.InputLabel>
+      <C.InputLabel>
+        <C.InputTitle>Valor</C.InputTitle>
+        <C.Input type="number" value={valueField} onChange={e => setValueField(parseFloat(e.target.value))} />
+      </C.InputLabel>
+      <C.InputLabel>
+        <C.InputTitle>&nbsp;</C.InputTitle>
+        <C.Button onClick={handleAddEvent}>
+          {itemToEdit ? 'Atualizar' : 'Adicionar'}
+        </C.Button>
+
+      </C.InputLabel>
+    </C.Container>
   );
 }

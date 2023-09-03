@@ -11,6 +11,7 @@ import { newDateAdjusted } from './helpers/dateFilter';
 import Modal from './components/InputArea/Modal';
 
 
+
 const App = () => {
   const [list, setList] = useState<Item[]>([]);
   const [filteredList, setFilteredList] = useState<Item[]>([]);
@@ -20,6 +21,11 @@ const App = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [dateField, setDateField] = useState('');
+  const [categoryField, setCategoryField] = useState('');
+  const [titleField, setTitleField] = useState('');
+  const [valueField, setValueField] = useState(0);
+
 
 
 
@@ -78,12 +84,12 @@ const App = () => {
   const handleMonthChange = (newMonth: string) => {
     setCurrentMonth(newMonth);
   }
-const handleEditClick = (item: Item) => {
-  // Set the editing item state
-  setEditingItem(item);
-  // Set the show edit modal state
-  setShowEditModal(true);
-};
+  const handleEditClick = (item: Item) => {
+    // Set the editing item state
+    setEditingItem(item);
+    // Set the show edit modal state
+    setShowEditModal(true);
+  };
 
   const handleModalClose = () => {
     setEditingItem(null);
@@ -107,7 +113,7 @@ const handleEditClick = (item: Item) => {
 
 
   const handleUpdateItem = async (item: Item) => {
-    
+
     if (!item.id) {
       setMessage("Erro ao atualizar: ID do item não fornecido");
       return;
@@ -128,11 +134,6 @@ const handleEditClick = (item: Item) => {
     }
   }
 
-
-
-
-
-
   return (
     <C.Container>
       <C.Header>
@@ -146,7 +147,7 @@ const handleEditClick = (item: Item) => {
           income={income}
           expense={expense}
         />
-         <InputArea
+        <InputArea
           onAdd={handleAddItem} // Correção aqui para adicionar itens
           itemToEdit={editingItem}
           onEdit={handleItemUpdate}

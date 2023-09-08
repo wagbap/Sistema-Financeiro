@@ -7,8 +7,6 @@ type Props = {
     item: Item
 }
 
-
-
 export const TableItem = ({ item }: Props) => {
     return (
         <>
@@ -18,6 +16,11 @@ export const TableItem = ({ item }: Props) => {
                     {categories[item.category].title}
                 </C.Category>
             </C.TableColumn>
+            <C.TableColumn>
+                <C.Value color={item.status === 'paid' ? 'green' : 'orange'}>
+                {item.status}
+                </C.Value>
+                </C.TableColumn>
             <C.TableColumn>{item.title}</C.TableColumn>
             <C.TableColumn>
                 <C.Value color={categories[item.category].expense ? 'red' : 'green'}>

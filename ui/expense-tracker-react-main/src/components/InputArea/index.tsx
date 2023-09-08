@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import * as C from './styles';
 import { Item } from '../../types/Item';
 import moment from 'moment';
@@ -23,9 +23,9 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
   const [categoryField, setCategoryField] = useState('');
   const [titleField, setTitleField] = useState('');
   const [valueField, setValueField] = useState(0);
+  const [statusField, setStatusField] = useState<'pending' | 'paid'>('pending');
 
 
-  
 
   let categoryKeys: string[] = Object.keys(categories);
 
@@ -55,7 +55,8 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
           date: newDateAdjusted(dateField),
           category: categoryField,
           title: titleField,
-          value: valueField
+          value: valueField,
+          status: statusField  // Adicione esta linha
         });
         onEditComplete(); // Feche o modal após editar
       } else {
@@ -64,7 +65,8 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
           date: newDateAdjusted(dateField),
           category: categoryField,
           title: titleField,
-          value: valueField
+          value: valueField,
+          status: statusField  // Adicione esta linha
         });
         clearFields();
       }
@@ -76,26 +78,26 @@ export const InputArea = ({ onAdd, itemToEdit, onEdit, onEditComplete }: Props) 
     setCategoryField('');
     setTitleField('');
     setValueField(0);
-}
-
-useEffect(() => {
-  if (itemToEdit) {
-    if (itemToEdit.date instanceof Date) {
-      const formattedDate = `${itemToEdit.date.getFullYear()}-${(itemToEdit.date.getMonth() + 1).toString().padStart(2, '0')}-${itemToEdit.date.getDate().toString().padStart(2, '0')}`;
-      setDateField(formattedDate);
-    } else {
-      // Use a linha aqui dentro do useEffect
-      const formattedDate = moment(itemToEdit.date).format('YYYY-MM-DD');
-      setDateField(formattedDate);
-    }
-    
-    setCategoryField(itemToEdit.category);
-    setTitleField(itemToEdit.title);
-    setValueField(itemToEdit.value);
-  }  else {
-    clearFields();
   }
-}, [itemToEdit]);
+
+  useEffect(() => {
+    if (itemToEdit) {
+      if (itemToEdit.date instanceof Date) {
+        const formattedDate = `${itemToEdit.date.getFullYear()}-${(itemToEdit.date.getMonth() + 1).toString().padStart(2, '0')}-${itemToEdit.date.getDate().toString().padStart(2, '0')}`;
+        setDateField(formattedDate);
+      } else {
+        // Use a linha aqui dentro do useEffect
+        const formattedDate = moment(itemToEdit.date).format('YYYY-MM-DD');
+        setDateField(formattedDate);
+      }
+      setStatusField(itemToEdit.status || 'pending');
+      setCategoryField(itemToEdit.category);
+      setTitleField(itemToEdit.title);
+      setValueField(itemToEdit.value);
+    } else {
+      clearFields();
+    }
+  }, [itemToEdit]);
 
 
 
@@ -119,6 +121,17 @@ useEffect(() => {
         </C.Select>
       </C.InputLabel>
       <C.InputLabel>
+        <C.InputTitle>Estado</C.InputTitle>
+        <C.Select
+          value={statusField}
+          onChange={e => setStatusField(e.target.value as 'pending' | 'paid')}
+        >
+          <option value="pending">Pendente</option>
+          <option value="paid">Pago</option>
+        </C.Select>
+
+      </C.InputLabel>
+      <C.InputLabel>
         <C.InputTitle>Título</C.InputTitle>
         <C.Input type="text" value={titleField} onChange={e => setTitleField(e.target.value)} />
       </C.InputLabel>
@@ -127,7 +140,7 @@ useEffect(() => {
         <C.Input type="number" value={valueField} onChange={e => setValueField(parseFloat(e.target.value))} />
       </C.InputLabel>
       <C.InputLabel>
-        <C.InputTitle>&nbsp;</C.InputTitle>
+        <C.InputTitle>Acões</C.InputTitle>
         <C.Button onClick={handleAddEvent}>
           {itemToEdit ? 'Atualizar' : 'Adicionar'}
         </C.Button>

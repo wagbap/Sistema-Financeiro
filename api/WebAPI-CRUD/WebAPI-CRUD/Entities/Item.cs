@@ -11,5 +11,8 @@ namespace WebAPI_CRUD.Entities
         public string category { get; set; }
         public string title { get; set; }
         public double value { get; set; }
+        public string status   { get; set; }
+
+        //Acrescentei um status
     }
 }

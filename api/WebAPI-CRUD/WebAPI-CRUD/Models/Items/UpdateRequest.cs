@@ -10,6 +10,7 @@ namespace WebAPI_CRUD.Models.Items
         public string category { get; set; }
         public string title { get; set; }
         public double value { get; set; }
+        public string status  { get; set; }
 
         private string replaceEmptyWithNull(string value)
         {

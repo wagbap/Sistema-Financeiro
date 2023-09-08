@@ -19,6 +19,7 @@ export const TableArea = ({ list, onEdit, onDelete }: Props) => {
                 <tr>
                     <C.TableHeadColumn width={100}>Data</C.TableHeadColumn>
                     <C.TableHeadColumn width={130}>Categoria</C.TableHeadColumn>
+                    <C.TableHeadColumn width={100}>Estado</C.TableHeadColumn>
                     <C.TableHeadColumn>Título</C.TableHeadColumn>
                     <C.TableHeadColumn width={150}>Valor</C.TableHeadColumn>
                     <C.TableHeadColumn width={50}>Ações</C.TableHeadColumn> {/* Adicionado */}
@@ -29,10 +30,9 @@ export const TableArea = ({ list, onEdit, onDelete }: Props) => {
                     <tr key={item.id}>  {/* Use o ID do item como chave */}
                         <TableItem key={index} item={item} />
                         <td>
-
-                     
-
-                            <FontAwesomeIcon
+           
+           
+                           <FontAwesomeIcon
                                 icon={faPencilAlt}
                                 onClick={() => onEdit(item)}
                                 style={{ color:"#5F9EA0", cursor: "pointer", marginRight: "10px" }}

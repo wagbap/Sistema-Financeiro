@@ -10,5 +10,5 @@ export const categories: Category = {
     meo: { title: 'Tarifário MEO', color: '#008080', expense: true },
     divida: { title: 'Dividas', color: 'red', expense: true },
     utensilhos: { title: 'Utensílios', color: '#000080', expense: true },
-    taxabanco: { title: 'Taxa do  Banco', color: '#000090', expense: true }
+    taxabanco: { title: 'Taxa do  Banco', color: '#8B4513', expense: true }
 }

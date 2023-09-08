@@ -8,7 +8,7 @@ import { InfoArea } from './components/InfoArea';
 import { InputArea } from './components/InputArea';
 import axios from 'axios';
 
-const API_BASE_URL = 'https://localhost:7189/api/v1/items';
+
 
 const App = () => {
   const [list, setList] = useState<Item[]>([]);
@@ -60,12 +60,15 @@ const App = () => {
     let expenseCount = 0;
 
     for (let i in filteredList) {
-      if (categories[filteredList[i].category].expense) {
-        expenseCount += filteredList[i].value;
-      } else {
-        incomeCount += filteredList[i].value;
+      if (filteredList[i].status === 'paid') {  // Adicione esta linha
+        if (categories[filteredList[i].category].expense) {
+          expenseCount += filteredList[i].value;
+        } else {
+          incomeCount += filteredList[i].value;
+        }
       }
     }
+    
 
     setIncome(incomeCount);
     setExpense(expenseCount);
@@ -174,7 +177,7 @@ const App = () => {
           expense={expense}
         />
 
-        {message && <div>{message}</div>}
+        {/*message && <div>{message}</div>*/}
         
         <InputArea
           onAdd={handleAddItem} // Correção aqui para adicionar itens

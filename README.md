@@ -20,7 +20,6 @@
 - [Recursos](#-recursos)
 - [Instalação](#-instalação)
 - [Uso](#-uso)
-- [Contribuição](#-contribuição)
 - [Licença](#-licença)
 
 ---
@@ -47,6 +46,12 @@ cd path/to/react-app-directory<br>
 npm install<br>
 npm start
 
+## 🖥️ Uso
+Para usar o sistema após a instalação, abra seu navegador e acesse:
+
+Backend: http://localhost:5000
+Frontend: http://localhost:3000
+Certifique-se de que ambas as aplicações (backend e frontend) estejam rodando para uma experiência completo
 
 ## 📝 Licença
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.

@@ -56,7 +56,9 @@ Certifique-se de que ambas as aplicações (backend e frontend) estejam rodando 
 ## 📝 Licença
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
-<div align="center">
+
+<br><br>
+<div align="left">
 Feito com ❤️ por Wagner Baptista!
 
 </div>
